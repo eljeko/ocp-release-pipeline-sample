@@ -4,9 +4,13 @@ This example works both on openshift and minishift.
 
 ## Create the projects
 
-* cicd
-* cool-app-dev
-* cool-app-prod
+Run the script ```setup.sh``` with a paramenter eg:
+
+```setup.sh demotest```
+
+This command should create two new projects with preconfigured OpenShift Buildconfigs and DeploymentConfigs.
+
+A the end you see also the jenkinsbot sevice accoutn tokens to use in your pipelines.
 
 ### cool-app-dev
 
@@ -85,7 +89,18 @@ It should looks like this:
 
 ![Empty project](images/Edit_prod_yaml_from_image_source_02.png)
 
-## CICD with jenkins
+
+## Setup external Jenkins
+
+Login in your Jenkins and create two projects:
+
+1. Acme-release
+2. Acme-release-pipeline
+
+The first project gets the parameters to run the main pipeline (Acme-release-pipeline)
+
+
+## CICD with jenkins (Jenkins deployed on OpenShift)
 
 First add jenkins to the project (from the webconsole):
 

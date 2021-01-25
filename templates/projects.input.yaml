@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: tekton-sample-template
+objects:
+- kind: ProjectRequest
+  apiVersion: v1
+  metadata:
+    name: acme-app-stage-${PREFIX}
+    creationTimestam: null
+  displayName: EAP Acme App - Stage
+- kind: ProjectRequest
+  apiVersion: v1
+  metadata:
+    name: acme-app-prod-${PREFIX}
+    creationTimestam: null
+  displayName: EAP Acme App - Production
+parameters:
+- description: Prefix for the projects
+  from: '[A-Z0-9]{8}'
+  generate: expression
+  name: PREFIX
