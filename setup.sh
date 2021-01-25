@@ -51,7 +51,10 @@ if [ ! -z "$1" ]; then
         
         echo -e "\n> App prepared\n"
         
-
+        #oc policy add-role-to-user system:image-puller system:serviceaccount:<destination_project>:default --namespace=<source_project>
+        #oc policy add-role-to-user system:image-puller system:serviceaccount:acme-app-prod-$1:default --namespace=acme-app-stage-$1
+         
+        
         #######
         # Create jenkins serviceaccount
         #######
@@ -67,6 +70,7 @@ if [ ! -z "$1" ]; then
        
         oc create serviceaccount jenkinsbot -n acme-app-prod-$1
         oc policy add-role-to-user edit system:serviceaccount:acme-app-prod-$1:jenkinsbot -n acme-app-prod-$1
+        oc policy add-role-to-user edit system:serviceaccount:acme-app-prod-$1:jenkinsbot -n acme-app-stage-$1
         PROD_SERVICEACCOUNT_TOKEN=`oc serviceaccounts get-token jenkinsbot -n acme-app-prod-$1`
         echo -e "\nTOKEN > "$PROD_SERVICEACCOUNT_TOKEN
 
