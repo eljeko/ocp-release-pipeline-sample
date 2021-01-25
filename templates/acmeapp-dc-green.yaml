@@ -1,0 +1,51 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:  
+  labels:
+    app: acmeapp-green
+    app.kubernetes.io/component: acmeapp-green
+    app.kubernetes.io/instance: acmeapp-green
+  name: acmeapp-green
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    deploymentconfig: acmeapp-green
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        deploymentconfig: acmeapp-green
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/acme-app-stage-xxxx/acmeapp:1.0
+        imagePullPolicy: Always
+        name: acmeapp-green
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
+        - containerPort: 8778
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
